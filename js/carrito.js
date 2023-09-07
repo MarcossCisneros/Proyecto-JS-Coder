@@ -3,11 +3,10 @@ const contenedorCarritoVacio = document.querySelector("#carrito-vacio");
 const contenedorCarritoProductos = document.querySelector("#contenedor-carrito-productos");
 const carritoAcciones = document.querySelector("#carrito-acciones");
 const carritoComprado = document.querySelector("#carrito-comprado");
-let botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar")
+const botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar")
 
 function cargarProductosCarrito(){
     if(productosEnCarro){
-    
         contenedorCarritoVacio.classList.add("disabled")
         contenedorCarritoProductos.classList.remove("disabled");
         carritoAcciones.classList.remove("disabled");
