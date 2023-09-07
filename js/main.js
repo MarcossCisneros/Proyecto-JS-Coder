@@ -56,7 +56,7 @@ const productos = [
         titulo: "pantalon 01",
         imagen: "./img/pantalones/01.jpg",
         categoria: {
-            nombre: "pantalones",
+            nombre: "Pantalones",
             id: "pantalones"
         },
         precio: 5000
@@ -65,7 +65,7 @@ const productos = [
         titulo: "pantalon 02",
         imagen: "./img/pantalones/02.jpg",
         categoria: {
-            nombre: "pantalones",
+            nombre: "Pantalones",
             id: "pantalones"
         },
         precio: 5000
@@ -75,7 +75,7 @@ const productos = [
         titulo: "pantalon 03",
         imagen: "./img/pantalones/03.jpg",
         categoria: {
-            nombre: "pantalones",
+            nombre: "Pantalones",
             id: "pantalones"
         },
         precio: 5000
@@ -85,7 +85,7 @@ const productos = [
         titulo: "pantalon 04",
         imagen: "./img/pantalones/04.jpg",
         categoria: {
-            nombre: "pantalones",
+            nombre: "Pantalones",
             id: "pantalones"
         },
         precio: 5000
@@ -95,7 +95,7 @@ const productos = [
         titulo: "pantalon 05",
         imagen: "./img/pantalones/05.jpg",
         categoria: {
-            nombre: "pantalones",
+            nombre: "Pantalones",
             id: "pantalones"
         },
         precio: 5000
@@ -106,7 +106,7 @@ const productos = [
         titulo: "camiseta 01",
         imagen: "./img/camisetas/01 .jpg",
         categoria: {
-            nombre: "camisetas",
+            nombre: "Camisetas",
             id: "camisetas"
         },
         precio: 3000
@@ -116,7 +116,7 @@ const productos = [
         titulo: "camiseta 02",
         imagen: "./img/camisetas/02.jpg",
         categoria: {
-            nombre: "camisetas",
+            nombre: "Camisetas",
             id: "camisetas"
         },
         precio: 3000
@@ -126,7 +126,7 @@ const productos = [
         titulo: "camiseta 03",
         imagen: "./img/camisetas/03.jpg",
         categoria: {
-            nombre: "camisetas",
+            nombre: "Camisetas",
             id: "camisetas"
         },
         precio: 3000
@@ -136,7 +136,7 @@ const productos = [
         titulo: "camiseta 04",
         imagen: "./img/camisetas/04.jpg",
         categoria: {
-            nombre: "camisetas",
+            nombre: "Camisetas",
             id: "camisetas"
         },
         precio: 3000
@@ -146,7 +146,7 @@ const productos = [
         titulo: "camiseta 05",
         imagen: "./img/camisetas/05.jpg",
         categoria: {
-            nombre: "camisetas",
+            nombre: "Camisetas",
             id: "camisetas"
         },
         precio: 3000
@@ -156,7 +156,9 @@ const productos = [
 
 const contenedorProductos = document.querySelector(".contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
-const tituloPrincipal = document.querySelector("#tituloPrincipal")
+const tituloPrincipal = document.querySelector("#tituloPrincipal");
+const botonesAgregar = document.querySelectorAll(".producto-agregar");
+const numeroDelCarrito = document.querySelector("#numero-carrito")
 
 function cargarProductos(productosElegidos){
     contenedorProductos.innerHTML = ""
@@ -178,6 +180,8 @@ function cargarProductos(productosElegidos){
     })
 }
 
+cargarProductos(productos)
+
 botonesCategorias.forEach(boton => {
     boton.addEventListener("click", (evento) => {
 
@@ -193,12 +197,55 @@ botonesCategorias.forEach(boton => {
             cargarProductos(productosBoton);
     
         }else{
-            tituloPrincipal.innerText = "Todos los productos"
+            tituloPrincipal.innerText = "Todos los productos";
             cargarProductos(productos)
         }
-
     })
+    actualizarBotonesAgregar();
 })
+
+function actualizarBotonesAgregar(){
+    let botonesAgregar = document.querySelectorAll(".producto-agregar");
+
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener("click", agregarAlCarrito)
+    });
+}
+
+let productosEnCarrito;
+
+let productosEnCarritoLS = localStorage.getItem("productos-en-carrito");
+
+if(productosEnCarritoLS){
+    productosEnCarrito = JSON.parse(productosEnCarroLS);
+    actualizarNumeroCarrito();
+}else{
+    productosEnCarrito = [];
+}
+
+function agregarAlCarrito(e){
+
+    const idBoton = e.currentTarget.id;
+    const productoAgregado = productos.find(prod => prod.id === idBoton);
+
+    if(productosEnCarrito.some(prod => prod.id === idBoton)){
+        const index = productosEnCarrito.findIndex(prod => prod.id === idBoton);
+        productosEnCarrito[index].cantidad++;
+    }else{
+        productoAgregado.cantidad = 1;
+        productosEnCarrito.push(productoAgregado);
+    }
+
+    actualizarNumeroCarrito();
+
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+}
+
+function actualizarNumeroCarrito(){
+    let numeroCarrito = productosEnCarrito.reduce((ac, prod) => ac + prod.cantidad, 0); 
+    numeroDelCarrito.innerText = numeroCarrito;
+}
+
 
 
 
