@@ -49,14 +49,15 @@ function cargarProductosCarrito(){
     }else{
         contenedorCarritoVacio.classList.remove("disabled")
         contenedorCarritoProductos.classList.add("disabled");
-        carritoAcciones.classList.add("disabled");
+        carritoAcciones.classList.add("disabled"); 
         carritoComprado.classList.add("disabled");
     };
 
     actualizarBotonesEliminar();
+
 }
 
-cargarProductosCarrito();
+
 
 function actualizarBotonesEliminar(){
     let botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar");
@@ -77,4 +78,5 @@ function eliminarDelCarrito(e){
 
 }
 
+cargarProductosCarrito()
 
