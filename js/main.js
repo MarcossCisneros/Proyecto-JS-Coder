@@ -1,3 +1,4 @@
+//Array de productos.
 const productos = [
   //arigos
   {
@@ -153,13 +154,14 @@ const productos = [
     precio: 3000,
   },
 ];
-
+// Llamados del DOM.
 const contenedorProductos = document.querySelector(".contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
 const tituloPrincipal = document.querySelector("#tituloPrincipal");
 const botonesAgregar = document.querySelectorAll(".producto-agregar");
 const numeroDelCarrito = document.querySelector("#numero-carrito");
 
+// funcion de cargar productos
 function cargarProductos(productosElegidos) {
   contenedorProductos.innerHTML = "";
 
@@ -179,9 +181,9 @@ function cargarProductos(productosElegidos) {
   });
   actualizarBotonesAgregar();
 }
-
 cargarProductos(productos);
 
+// filtrar con los botones de categoria
 botonesCategorias.forEach((boton) => {
   boton.addEventListener("click", (evento) => {
     botonesCategorias.forEach((boton) => {
@@ -207,6 +209,7 @@ botonesCategorias.forEach((boton) => {
   });
 });
 
+// botones de agregar al carrito y llamado de la funcion agregar.
 function actualizarBotonesAgregar() {
   let botonesAgregar = document.querySelectorAll(".producto-agregar");
 
@@ -215,8 +218,8 @@ function actualizarBotonesAgregar() {
   });
 }
 
+// productos en carrito desde el local storage donde si existen los convierte y si no queda vacio.
 let productosEnCarrito;
-
 let productosEnCarritoLS = localStorage.getItem("productos-en-carrito");
 
 if (productosEnCarritoLS) {
@@ -226,6 +229,7 @@ if (productosEnCarritoLS) {
   productosEnCarrito = [];
 }
 
+// funcion de agregar al carrito donde toma el evento como parametro el cual tiene el mismo id del producto que le corresponda. luego se busca si algun objeto tiene el mismo id y si lo tiene se le suma una unidad a cantidad y si no coincide ningun objeto, este se carga al array productos en carrito. Al final es subido al local storage con la convercion JSON.stringify,
 function agregarAlCarrito(e) {
   const idBoton = e.currentTarget.id;
   const productoAgregado = productos.find((prod) => prod.id === idBoton);
@@ -246,6 +250,7 @@ function agregarAlCarrito(e) {
   );
 }
 
+// funcion que actualiza el numero de productos del carrito tomando la cantidad de unidades de cada producto en el local storage.
 function actualizarNumeroCarrito() {
   let numeroCarrito = productosEnCarrito.reduce(
     (ac, prod) => ac + prod.cantidad,

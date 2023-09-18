@@ -1,3 +1,4 @@
+// Llamados del DOM
 let productosEnCarro = JSON.parse(localStorage.getItem("productos-en-carrito"));
 const contenedorCarritoVacio = document.querySelector("#carrito-vacio");
 const contenedorCarritoProductos = document.querySelector(
@@ -15,6 +16,7 @@ const contenedorTotal = document.querySelector("#total");
 const btnComprar = document.querySelector(".carrito-acciones-comprar");
 btnComprar.addEventListener("click", comprarCarrito);
 
+// funcion de cargar productos, si hay productos en el storage se agregan y añaden clases para cambiar la apariencia, luego se toma el contenedor del carrito en el html y se renderizan los productos llamados del storage creando asi las tarjetas y haciendo un append hacia el contenedor.
 function cargarProductosCarrito() {
   if (productosEnCarro && productosEnCarro.length > 0) {
     contenedorCarritoVacio.classList.add("disabled");
@@ -69,8 +71,10 @@ function cargarProductosCarrito() {
   actualizarTotal();
 }
 
+// se llama a la funcion de cargar productos, para que renderice
 cargarProductosCarrito();
 
+// se llaman a los botones de eliminar y se les agrega el onclick y la funcion.
 function actualizarBotonesEliminar() {
   let botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar");
 
@@ -79,21 +83,46 @@ function actualizarBotonesEliminar() {
   });
 }
 
+// funcion para eliminar productos, que recibe el evento como parametro y se busca dentro del index un producto cuyo id sea igual al del boton para buscar su posicion, luego de encontrar la posicion si hacemos click se eliminara y se volvera a cargar el carrito para que se actualice.
 function eliminarDelCarrito(e) {
   const idBoton = e.currentTarget.id;
   const index = productosEnCarro.findIndex((prod) => prod.id === idBoton);
 
-  productosEnCarro.splice(index, 1);
-  cargarProductosCarrito();
+  Swal.fire({
+    title: "Esta seguro que desea eliminar el producto?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Si",
+    denyButtonText: `No`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: `error`,
+        title: `Producto Eliminado`,
+        showConfirmButton: false,
+        timer: 1000,
+      });
 
-  localStorage.setItem(
-    "productos-en-carrito",
-    JSON.stringify(productosEnCarro)
-  );
+      productosEnCarro.splice(index, 1);
+      cargarProductosCarrito();
+      localStorage.setItem(
+        "productos-en-carrito",
+        JSON.stringify(productosEnCarro)
+      );
+    } else if (result.isDenied) {
+      Swal.fire({
+        icon: `info`,
+        title: `El producto no se elimino`,
+        showConfirmButton: false,
+        timer: 800,
+      });
+    }
+  });
 }
 
+// funcion vaciar carrito, en esta funcion tuve que buscar ejemplos y maneras de vaciarlo ya que no encontraba la manera de hacer andar el clear.
 function vaciarCarrito() {
-  productosEnCarro.length = 0;
+  productosEnCarro.length = [];
   localStorage.setItem(
     "productos-en-carrito",
     JSON.stringify(productosEnCarro)
@@ -101,6 +130,7 @@ function vaciarCarrito() {
   cargarProductosCarrito();
 }
 
+// funcion para actualizar el total, se ejecuta un reduce con el precio de los productos en carro, luego cambia el valor de total convirtiendolo en el precio total del carrito.
 function actualizarTotal() {
   let templateTotal = productosEnCarro.reduce(
     (ac, prod) => ac + prod.precio * prod.cantidad,
@@ -109,6 +139,7 @@ function actualizarTotal() {
   total.innerText = `$${templateTotal}`;
 }
 
+// en esta funcion lo primero que hacemos es vaciar el carrito y luego damos una alerta de compra.
 function comprarCarrito() {
   productosEnCarro.length = 0;
   localStorage.setItem(
@@ -122,5 +153,10 @@ function comprarCarrito() {
   carritoAcciones.classList.add("disabled");
   carritoComprado.classList.remove("disabled");
 
-  alert("Muchas gracias por tu compra!!");
+  Swal.fire({
+    icon: `success`,
+    title: `Compra recibida`,
+    showConfirmButton: false,
+    timer: 2300,
+  });
 }
