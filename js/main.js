@@ -1,162 +1,12 @@
-principal();
+// pedido de informacion al data.json
+fetch("../js/data.json")
+  .then((respuesta) => respuesta.json())
+  .then((productos) => principal(productos));
+
 //mi funcion principal
-function principal() {
+function principal(productosBD) {
   //array de productos
-  const productos = [
-    //abrigos
-    {
-      id: "abrigo-01",
-      titulo: "Abrigo 01",
-      imagen: "./img/abrigos/01.jpg",
-      categoria: {
-        nombre: "Abrigos",
-        id: "abrigos",
-      },
-      precio: 1000,
-    },
-    {
-      id: "abrigo-02",
-      titulo: "Abrigo 02",
-      imagen: "./img/abrigos/02.jpg",
-      categoria: {
-        nombre: "Abrigos",
-        id: "abrigos",
-      },
-      precio: 1000,
-    },
-    {
-      id: "abrigo-03",
-      titulo: "Abrigo 03",
-      imagen: "./img/abrigos/03.jpg",
-      categoria: {
-        nombre: "Abrigos",
-        id: "abrigos",
-      },
-      precio: 1000,
-    },
-    {
-      id: "abrigo-04",
-      titulo: "Abrigo 04",
-      imagen: "./img/abrigos/04.jpg",
-      categoria: {
-        nombre: "Abrigos",
-        id: "abrigos",
-      },
-      precio: 1000,
-    },
-    {
-      id: "abrigo-05",
-      titulo: "Abrigo 05",
-      imagen: "./img/abrigos/05.jpg",
-      categoria: {
-        nombre: "Abrigos",
-        id: "abrigos",
-      },
-      precio: 1000,
-    },
-    //pantalones
-    {
-      id: "pantalo-01",
-      titulo: "pantalon 01",
-      imagen: "./img/pantalones/01.jpg",
-      categoria: {
-        nombre: "Pantalones",
-        id: "pantalones",
-      },
-      precio: 5000,
-    },
-    {
-      id: "pantalo-02",
-      titulo: "pantalon 02",
-      imagen: "./img/pantalones/02.jpg",
-      categoria: {
-        nombre: "Pantalones",
-        id: "pantalones",
-      },
-      precio: 5000,
-    },
-    {
-      id: "pantalo-03",
-      titulo: "pantalon 03",
-      imagen: "./img/pantalones/03.jpg",
-      categoria: {
-        nombre: "Pantalones",
-        id: "pantalones",
-      },
-      precio: 5000,
-    },
-    {
-      id: "pantalo-04",
-      titulo: "pantalon 04",
-      imagen: "./img/pantalones/04.jpg",
-      categoria: {
-        nombre: "Pantalones",
-        id: "pantalones",
-      },
-      precio: 5000,
-    },
-    {
-      id: "pantalo-05",
-      titulo: "pantalon 05",
-      imagen: "./img/pantalones/05.jpg",
-      categoria: {
-        nombre: "Pantalones",
-        id: "pantalones",
-      },
-      precio: 5000,
-    },
-    //camisetas
-    {
-      id: "camiseta-01",
-      titulo: "camiseta 01",
-      imagen: "./img/camisetas/01.jpg",
-      categoria: {
-        nombre: "Camisetas",
-        id: "camisetas",
-      },
-      precio: 3000,
-    },
-    {
-      id: "camiseta-02",
-      titulo: "camiseta 02",
-      imagen: "./img/camisetas/02.jpg",
-      categoria: {
-        nombre: "Camisetas",
-        id: "camisetas",
-      },
-      precio: 3000,
-    },
-    {
-      id: "camiseta-03",
-      titulo: "camiseta 03",
-      imagen: "./img/camisetas/03.jpg",
-      categoria: {
-        nombre: "Camisetas",
-        id: "camisetas",
-      },
-      precio: 3000,
-    },
-    {
-      id: "camiseta-04",
-      titulo: "camiseta 04",
-      imagen: "./img/camisetas/04.jpg",
-      categoria: {
-        nombre: "Camisetas",
-        id: "camisetas",
-      },
-      precio: 3000,
-    },
-    {
-      id: "camiseta-05",
-      titulo: "camiseta 05",
-      imagen: "./img/camisetas/05.jpg",
-      categoria: {
-        nombre: "Camisetas",
-        id: "camisetas",
-      },
-      precio: 3000,
-    },
-  ];
+  const productos = productosBD;
   //llamados del dom
   const botonesCategorias = document.querySelectorAll(".boton-categoria");
   const tituloPrincipal = document.querySelector(".titulo__productos");
@@ -260,11 +110,18 @@ function agregarAlCarrito(producto, evento, carrito) {
     });
   }
 
+  Toastify({
+    text: "Producto Agregado",
+    duration: 2000,
+    newWindow: true,
+    gravity: "bottom", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+  }).showToast();
   //localStorage
 
   let carritoJSON = JSON.stringify(carrito);
   localStorage.setItem("carrito", carritoJSON);
 }
-
-// funcion renderizar carrito
-function renderizarCarrito(productos) {}

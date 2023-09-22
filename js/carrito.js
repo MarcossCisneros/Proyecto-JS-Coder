@@ -1,4 +1,3 @@
-
 principal();
 //mi funcion principal
 function principal() {
@@ -42,10 +41,10 @@ function renderizarCarrito(productos) {
 
     tarjetaProducto.innerHTML = `
     <img src=${prod.img}>
-    <p>${prod.titulo}</p>
-    <p>$${prod.precioUnitario}</p>
-    <p>Cantidad: ${prod.unidades}</p>
-    <p>$${prod.subtotal}</p>
+    <p><strong>Nombre:</strong>${prod.titulo}</p>
+    <p><strong>Precio:</strong>$${prod.precioUnitario}</p>
+    <p><strong>Cantidad:</strong> ${prod.unidades}</p>
+    <p><strong>SubTotal:</strong>$${prod.subtotal}</p>
     `;
 
     contenedor.appendChild(tarjetaProducto);

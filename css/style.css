@@ -296,6 +296,14 @@ main {
   border-radius: 20px;
 }
 
+.tarjetaCarrito p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
 .total {
   padding: 1rem;
 }
