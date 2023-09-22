@@ -112,6 +112,8 @@ header {
     opacity: 1;
     visibility: visible;
     position: fixed;
+    animation: slideInRight;
+    animation-duration: 0.5s;
   }
 
   .not-visible {
