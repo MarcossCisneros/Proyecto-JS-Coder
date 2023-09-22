@@ -227,6 +227,7 @@ main {
   justify-content: space-between;
   align-items: flex-end;
   margin: 2rem 0;
+  width: 100%;
 }
 
 .vaciar__carrito {
