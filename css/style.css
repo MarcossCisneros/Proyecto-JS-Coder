@@ -145,6 +145,14 @@ header {
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 100vh;
+  width: 60%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .producto {
@@ -202,6 +210,10 @@ header {
 }
 
 /**Carrito**/
+
+.titulo__productos {
+  width: 60%;
+}
 
 #volver a {
   text-decoration: none;
